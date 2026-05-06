@@ -3,6 +3,8 @@
 
 # Godot-specific ignores
 .import/
+*.import
+export/
 export.cfg
 export_credentials.cfg
 

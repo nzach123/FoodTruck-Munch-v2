@@ -1,0 +1,222 @@
+[gd_scene format=3 uid="uid://c65s112lqbs1c"]
+
+[ext_resource type="PackedScene" uid="uid://cbd2ojah4nun6" path="res://_src/player/interaction_raycast.tscn" id="1_r73mr"]
+[ext_resource type="PackedScene" uid="uid://dfgeqtfj5x7u8" path="res://_src/interactables/BellStation.tscn" id="4_bell"]
+[ext_resource type="PackedScene" uid="uid://c4y56abxgxwf4" path="res://_src/interactables/SauceStation.tscn" id="5_sauce"]
+[ext_resource type="PackedScene" uid="uid://b30asqd6ppdn0" path="res://_src/interactables/ToppingStation.tscn" id="6_topping"]
+[ext_resource type="PackedScene" uid="uid://b3p42a2bfnjrv" path="res://_src/interactables/TortillaStation.tscn" id="7_tortilla"]
+[ext_resource type="PackedScene" uid="uid://cawwatuwl0uns" path="res://_src/interactables/TrompoStation.tscn" id="8_trompo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8vem4"]
+size = Vector3(0.6, 1.7, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ut3wm"]
+size = Vector3(0.6, 0.7, 0.6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bpb0d"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bpb0d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkb2q"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pwhxs"]
+albedo_color = Color(0.5, 0.5, 0.5, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bkb2q"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_pwhxs"]
+sky_material = SubResource("ProceduralSkyMaterial_bkb2q")
+
+[sub_resource type="Environment" id="Environment_h3637"]
+background_mode = 2
+sky = SubResource("Sky_pwhxs")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="TruckInterior" type="Node3D" unique_id=1616402923]
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=363114017 groups=["Player"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="Player" unique_id=159170301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_8vem4")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="Player" unique_id=188417856]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+shape = SubResource("BoxShape3D_ut3wm")
+disabled = true
+
+[node name="StaircheckRayCast3D" type="RayCast3D" parent="Player" unique_id=1366892716]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, -0.5, 0)
+
+[node name="CrouchRayCast" type="RayCast3D" parent="Player" unique_id=367226374]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+target_position = Vector3(0, 1.6, 0)
+collision_mask = 3
+
+[node name="Body" type="Node3D" parent="Player" unique_id=652991683]
+
+[node name="Neck" type="Node3D" parent="Player/Body" unique_id=1110223819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Head" type="Node3D" parent="Player/Body/Neck" unique_id=1809465093]
+
+[node name="Eyes" type="Node3D" parent="Player/Body/Neck/Head" unique_id=2021533849]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Body/Neck/Head/Eyes" unique_id=588771371]
+reset_on_save = false
+root_node = NodePath("../..")
+
+[node name="Camera" type="Camera3D" parent="Player/Body/Neck/Head/Eyes" unique_id=227176509]
+
+[node name="InteractionRaycast" parent="Player/Body/Neck/Head/Eyes/Camera" unique_id=579374494 instance=ExtResource("1_r73mr")]
+script = null
+
+[node name="CarryablePosition" type="Marker3D" parent="Player/Body/Neck/Head/Eyes/Camera" unique_id=2024412369]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8)
+
+[node name="ItemDropShapeCast" type="ShapeCast3D" parent="Player/Body/Neck/Head/Eyes/Camera" unique_id=1786333833]
+shape = SubResource("BoxShape3D_bpb0d")
+target_position = Vector3(0, 0, -2)
+collision_mask = 3
+debug_shape_custom_color = Color(1, 0.368977, 0.687569, 1)
+
+[node name="Wieldables" type="Node3D" parent="Player/Body/Neck/Head" unique_id=426634754]
+unique_name_in_owner = true
+
+[node name="MidnightMunchHUD" type="CanvasLayer" parent="Player" unique_id=963587457]
+layer = 2
+
+[node name="GUI" type="Control" parent="Player" unique_id=1233550101]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Player/GUI" unique_id=1000872164]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_bpb0d")
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Player/GUI/Panel" unique_id=2105872013]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InteractionStateMachine" type="Node" parent="Player" unique_id=1013760244]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Player" unique_id=676283431]
+
+[node name="CSGGeo" type="Node" parent="." unique_id=527582006]
+
+[node name="CSGCounter" type="CSGBox3D" parent="CSGGeo" unique_id=1312338580]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.245121, 0.5, 1.7561035)
+use_collision = true
+size = Vector3(1, 0.25, 1.987793)
+material = SubResource("StandardMaterial3D_bkb2q")
+
+[node name="CSGToppingsCounter" type="CSGBox3D" parent="CSGGeo" unique_id=601842508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.245121, 0.5, -0.998559)
+use_collision = true
+size = Vector3(1, 0.25, 3.493042)
+material = SubResource("StandardMaterial3D_bkb2q")
+
+[node name="CSGStove" type="CSGBox3D" parent="CSGGeo" unique_id=1043321156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2409387, 0.5, -0.62138975)
+use_collision = true
+size = Vector3(1, 0.25, 4.2557983)
+material = SubResource("StandardMaterial3D_bkb2q")
+
+[node name="CSGBody" type="CSGCombiner3D" parent="CSGGeo" unique_id=1867931183]
+visible = false
+operation = 2
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGGeo/CSGBody" unique_id=1013579846]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017028809, 1.3511682, 0)
+size = Vector3(3.6572266, 3.1774902, 5.6953125)
+
+[node name="CSGBool" type="CSGBox3D" parent="CSGGeo/CSGBody" unique_id=1189718248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5556003, 1.3804027, 1.7406378)
+operation = 2
+size = Vector3(1.6049805, 1.5063477, 1.9451752)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGGeo/CSGBody/CSGBool" unique_id=1820680719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5726291, -0.05668509, -1.7406378)
+size = Vector3(3.3693848, 3.0784607, 5.5146484)
+
+[node name="CSGDrinks" type="CSGBox3D" parent="CSGGeo" unique_id=838562958]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.246866, 1.2768466, 2.1303267)
+size = Vector3(1, 2.5512695, 1.2473145)
+material = SubResource("StandardMaterial3D_pwhxs")
+
+[node name="Toppings" type="Node" parent="CSGGeo" unique_id=1729458094]
+
+[node name="CSGFloor" type="CSGBox3D" parent="CSGGeo" unique_id=902432505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
+use_collision = true
+size = Vector3(3.5, 0.25, 5.5)
+
+[node name="Stations" type="Node3D" parent="." unique_id=843510232]
+
+[node name="TortillaStation" parent="Stations" unique_id=610898452 instance=ExtResource("7_tortilla")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1282512, 0.70663154, -0.35482228)
+script = null
+
+[node name="TrompoStation" parent="Stations" unique_id=842803975 instance=ExtResource("8_trompo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2139643, 1.1863663, -2.1265316)
+script = null
+
+[node name="BellStation" parent="Stations" unique_id=2045915056 instance=ExtResource("4_bell")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.273685, 0.75, 1.0216112)
+script = null
+
+[node name="WhiteSauceStation" parent="Stations" unique_id=793002987 instance=ExtResource("5_sauce")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2252098, 0.87863517, 0.37282252)
+script = null
+
+[node name="RedSauceStation" parent="Stations" unique_id=1640157716 instance=ExtResource("5_sauce")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2407285, 0.87863517, -0.04897183)
+script = null
+
+[node name="CilantroStation" parent="Stations" unique_id=1730194523 instance=ExtResource("6_topping")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.6975157, -1.3776923)
+script = null
+
+[node name="TomatoStation" parent="Stations" unique_id=1739248143 instance=ExtResource("6_topping")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.6975157, -1.9819947)
+script = null
+
+[node name="OnionStation" parent="Stations" unique_id=1532208550 instance=ExtResource("6_topping")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.25, 0.6975157, -0.80721164)
+script = null
+
+[node name="Lighting" type="Node" parent="." unique_id=1784620140]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lighting" unique_id=422707535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08505, 0.104987144)
+omni_range = 4.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=730619563]
+environment = SubResource("Environment_h3637")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=193217365]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[connection signal="animation_finished" from="Player/Body/Neck/Head/Eyes/AnimationPlayer" to="Player" method="_on_animation_player_animation_finished"]
