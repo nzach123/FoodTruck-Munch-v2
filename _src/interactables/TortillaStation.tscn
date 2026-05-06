@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b3p42a2bfnjrv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
+size = Vector3(0.5498047, 0.16308594, 0.6)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8nyck"]
+radius = 0.6483185
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hyy5g"]
+albedo_color = Color(0.86896247, 0.7748713, 0.6250081, 1)
+
+[node name="TortillaStation" type="Node3D" unique_id=1392864752]
+
+[node name="Hitbox" type="StaticBody3D" parent="." unique_id=241614685]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=468329891]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009299159, 0.0041109324, 0.0025205612)
+shape = SubResource("BoxShape3D_hitbox")
+
+[node name="BasicInteraction" type="Node" parent="Hitbox" unique_id=1353840001]
+
+[node name="SnapZone" type="Area3D" parent="." unique_id=1665750197]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SnapZone" unique_id=2033427462]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009299159, 0.0041109324, 0.0025205612)
+shape = SubResource("SphereShape3D_8nyck")
+
+[node name="CSGTortilla" type="CSGCylinder3D" parent="." unique_id=584096775]
+radius = 0.26
+height = 0.14208984
+material = SubResource("StandardMaterial3D_hyy5g")

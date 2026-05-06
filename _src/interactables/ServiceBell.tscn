@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://dfgeqtfj5x7u8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
+size = Vector3(0.20141602, 0.1171875, 0.20336914)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_d7ias"]
+radius = 0.8861515
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d7ias"]
+albedo_color = Color(1, 0.83316666, 0.089999974, 1)
+
+[node name="BellStation" type="Node3D" unique_id=1756585287]
+
+[node name="Hitbox" type="StaticBody3D" parent="." unique_id=1781746856]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=643037564 groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0889637, 0)
+shape = SubResource("BoxShape3D_hitbox")
+
+[node name="BasicInteraction" type="Node" parent="Hitbox" unique_id=1070858535]
+
+[node name="InteractionPrompt" type="Node3D" parent="." unique_id=1351342127]
+
+[node name="SnapZone" type="Area3D" parent="." unique_id=747945829]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SnapZone" unique_id=1540642450]
+shape = SubResource("SphereShape3D_d7ias")
+
+[node name="Bell" type="CSGCylinder3D" parent="." unique_id=509307629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.08865827, 0)
+radius = 0.1
+height = 0.104882814
+material = SubResource("StandardMaterial3D_d7ias")

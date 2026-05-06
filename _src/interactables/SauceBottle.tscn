@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c4y56abxgxwf4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hitbox"]
+size = Vector3(0.20019531, 0.50357664, 0.19897461)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bwtd5"]
+radius = 0.6702157
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwtd5"]
+albedo_color = Color(0.95, 0.95, 0.9, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sauce"]
+direction = Vector3(0, -1, 0)
+spread = 12.0
+initial_velocity_min = 0.4
+initial_velocity_max = 0.6
+gravity = Vector3(0, 3, 0)
+turbulence_noise_strength = 0.1
+turbulence_noise_scale = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sauce_particle"]
+shading_mode = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_sauce"]
+material = SubResource("StandardMaterial3D_sauce_particle")
+size = Vector2(0.04, 0.04)
+
+[node name="SauceStation" type="Node3D" unique_id=1190070910]
+
+[node name="Hitbox" type="StaticBody3D" parent="." unique_id=38691005]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=1706742221 groups=["interactable"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00068968534, 0)
+shape = SubResource("BoxShape3D_hitbox")
+
+[node name="BasicInteraction" type="Node" parent="Hitbox" unique_id=758591834]
+
+[node name="InteractionPrompt" type="Node3D" parent="." unique_id=859662290]
+
+[node name="SnapZone" type="Area3D" parent="." unique_id=525847611]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="SnapZone" unique_id=230466001]
+shape = SubResource("SphereShape3D_bwtd5")
+
+[node name="CSGWhiteSauce" type="CSGCylinder3D" parent="." unique_id=1083141422]
+radius = 0.1
+height = 0.5
+material = SubResource("StandardMaterial3D_bwtd5")
+
+[node name="SauceStream" type="GPUParticles3D" parent="." unique_id=1166553047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21245709, 0)
+emitting = false
+amount = 64
+lifetime = 0.7
+process_material = SubResource("ParticleProcessMaterial_sauce")
+draw_pass_1 = SubResource("QuadMesh_sauce")
