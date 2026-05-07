@@ -17,68 +17,110 @@ sky_material = SubResource("ProceduralSkyMaterial_da6ah")
 background_mode = 2
 sky = SubResource("Sky_pwhxs")
 tonemap_mode = 2
-glow_enabled = true
 
 [node name="TruckInterior" type="Node3D" unique_id=2098505316]
 
-[node name="TruckShell" type="Node" parent="." unique_id=1792921778]
+[node name="World" type="Node3D" parent="." unique_id=111111111]
 
-[node name="CSGCounter" type="CSGBox3D" parent="TruckShell" unique_id=2067690743]
+[node name="TruckShell" type="Node3D" parent="World" unique_id=1792921778]
+
+[node name="CSGCounter" type="CSGBox3D" parent="World/TruckShell" unique_id=2067690743]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.245121, 0.5, 1.7561035)
 use_collision = true
 size = Vector3(1, 0.25, 1.987793)
 material = SubResource("StandardMaterial3D_qdmqs")
 
-[node name="CSGToppingsCounter" type="CSGBox3D" parent="TruckShell" unique_id=1948344840]
+[node name="CSGToppingsCounter" type="CSGBox3D" parent="World/TruckShell" unique_id=1948344840]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.245121, 0.5, -0.998559)
 use_collision = true
 size = Vector3(1, 0.25, 3.493042)
 material = SubResource("StandardMaterial3D_qdmqs")
 
-[node name="CSGStove" type="CSGBox3D" parent="TruckShell" unique_id=1774638518]
+[node name="CSGStove" type="CSGBox3D" parent="World/TruckShell" unique_id=1774638518]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2409387, 0.5, -0.62138975)
 use_collision = true
 size = Vector3(1, 0.25, 4.2557983)
 material = SubResource("StandardMaterial3D_qdmqs")
 
-[node name="CSGBody" type="CSGCombiner3D" parent="TruckShell" unique_id=1648463764]
+[node name="CSGBody" type="CSGCombiner3D" parent="World/TruckShell" unique_id=1648463764]
 visible = false
 operation = 2
 
-[node name="CSGBox3D" type="CSGBox3D" parent="TruckShell/CSGBody" unique_id=1860419722]
+[node name="CSGBox3D" type="CSGBox3D" parent="World/TruckShell/CSGBody" unique_id=1860419722]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017028809, 1.3511682, 0)
 size = Vector3(3.6572266, 3.1774902, 5.6953125)
 
-[node name="CSGBool" type="CSGBox3D" parent="TruckShell/CSGBody" unique_id=1817017398]
+[node name="CSGBool" type="CSGBox3D" parent="World/TruckShell/CSGBody" unique_id=1817017398]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5556003, 1.3804027, 1.7406378)
 operation = 2
 size = Vector3(1.6049805, 1.5063477, 1.9451752)
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="TruckShell/CSGBody/CSGBool" unique_id=1608681813]
+[node name="CSGBox3D3" type="CSGBox3D" parent="World/TruckShell/CSGBody/CSGBool" unique_id=1608681813]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5726291, -0.05668509, -1.7406378)
 size = Vector3(3.3693848, 3.0784607, 5.5146484)
 
-[node name="CSGDrinks" type="CSGBox3D" parent="TruckShell" unique_id=235658226]
+[node name="CSGDrinks" type="CSGBox3D" parent="World/TruckShell" unique_id=235658226]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.246866, 1.2768466, 2.1303267)
 size = Vector3(1, 2.5512695, 1.2473145)
 material = SubResource("StandardMaterial3D_fsldu")
 
-[node name="Toppings" type="Node" parent="TruckShell" unique_id=1806817597]
-
-[node name="CSGFloor" type="CSGBox3D" parent="TruckShell" unique_id=333814126]
+[node name="CSGFloor" type="CSGBox3D" parent="World/TruckShell" unique_id=333814126]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.125, 0)
 use_collision = true
 size = Vector3(3.5, 0.25, 5.5)
 
-[node name="Lighting" type="Node" parent="." unique_id=1253920640]
+[node name="LightmapGI" type="LightmapGI" parent="World" unique_id=222222222]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Lighting" unique_id=604397299]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World" unique_id=1515742709]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_bake_mode = 1
+shadow_enabled = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="World" unique_id=604397299]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08505, 0.104987144)
+light_bake_mode = 1
 omni_range = 4.0
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Lighting" unique_id=874842655]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World" unique_id=874842655]
 environment = SubResource("Environment_bkb2q")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Lighting" unique_id=1515742709]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
+[node name="QueueSystem" type="Node3D" parent="." unique_id=747324527]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.1, 0, 2.3474827)
+
+[node name="CustomerSpawner" type="Node3D" parent="QueueSystem" unique_id=444444444]
+
+[node name="QueueSlots" type="Node3D" parent="QueueSystem" unique_id=555555555]
+
+[node name="Slot1" type="Marker3D" parent="QueueSystem/QueueSlots" unique_id=1804358921]
+
+[node name="Slot2" type="Marker3D" parent="QueueSystem/QueueSlots" unique_id=1436044747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.80408597)
+
+[node name="Slot3" type="Marker3D" parent="QueueSystem/QueueSlots" unique_id=1509805555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5385702)
+
+[node name="StationMarkers" type="Node3D" parent="." unique_id=1119435213]
+
+[node name="ServiceBellMarker3D" type="Marker3D" parent="StationMarkers" unique_id=1997265276]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2455341, 0.62609375, 1.1455429)
+
+[node name="SauceBottle_WhiteMarker3D" type="Marker3D" parent="StationMarkers" unique_id=600209723]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2455341, 0.62609375, 0.0044207573)
+
+[node name="SauceBottle_RedMarker3D" type="Marker3D" parent="StationMarkers" unique_id=1254213165]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2455341, 0.62609375, -0.40201455)
+
+[node name="ToppingBin_TomatoMarker3D" type="Marker3D" parent="StationMarkers" unique_id=1136879797]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2455341, 0.62609375, -1.1954156)
+
+[node name="ToppingBin_OnionMarker3D" type="Marker3D" parent="StationMarkers" unique_id=1870078577]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2455341, 0.62609375, -1.7338253)
+
+[node name="ToppingBin_CilantroMarker3D" type="Marker3D" parent="StationMarkers" unique_id=141112176]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2455341, 0.62609375, -2.2680812)
+
+[node name="TrompoStationMarker3D" type="Marker3D" parent="StationMarkers" unique_id=1945639633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.287031, 0.62609375, -1.9260738)
+
+[node name="TortillaStationMarker3D" type="Marker3D" parent="StationMarkers" unique_id=1066222819]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.287031, 0.62609375, 0.020550728)
