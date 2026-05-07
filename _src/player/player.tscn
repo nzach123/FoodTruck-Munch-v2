@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://di68v3h0kourt"]
+
+[ext_resource type="Script" path="res://_src/player/Player.gd" id="1_player"]
+[ext_resource type="Script" path="res://_src/player/InteractionStateMachine.gd" id="2_fsm"]
+[ext_resource type="Script" path="res://_src/player/states/StateIdle.gd" id="3_idle"]
+[ext_resource type="Script" path="res://_src/player/states/StateHover.gd" id="4_hover"]
+[ext_resource type="Script" path="res://_src/player/states/StateActive_Instant.gd" id="5_instant"]
+[ext_resource type="Script" path="res://_src/player/states/StateActive_Discrete.gd" id="6_discrete"]
+[ext_resource type="Script" path="res://_src/player/states/StateActive_Accumulate.gd" id="7_accumulate"]
+[ext_resource type="Script" path="res://_src/player/states/StateActive_Timing.gd" id="8_timing"]
+[ext_resource type="Script" path="res://_src/player/states/StateLocked.gd" id="9_locked"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qm4tn"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_75703"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qm4tn"]
+size = Vector3(0.2, 0.1, 0.2)
+
+[node name="Player" type="CharacterBody3D" unique_id=1323458222]
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=961306859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_qm4tn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1175878947]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_75703")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1382511329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
+
+[node name="MainCamera" type="Camera3D" parent="CameraPivot" unique_id=1279661487]
+cull_mask = 1048567
+current = true
+
+[node name="InteractionRayCast" type="RayCast3D" parent="CameraPivot" unique_id=1278218270]
+target_position = Vector3(0, 0, -3)
+collision_mask = 4
+
+[node name="ArmViewportContainer" type="SubViewportContainer" parent="." unique_id=599197689]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="ArmViewport" type="SubViewport" parent="ArmViewportContainer" unique_id=1682914557]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 0
+
+[node name="ArmCamera" type="Camera3D" parent="ArmViewportContainer/ArmViewport" unique_id=1426177470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6997075, 0)
+cull_mask = 8
+
+[node name="HandTransform" type="Marker3D" parent="ArmViewportContainer/ArmViewport/ArmCamera" unique_id=2077229049]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.4, -0.6)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ArmViewportContainer/ArmViewport/ArmCamera/HandTransform" unique_id=1922888319]
+layers = 8
+mesh = SubResource("BoxMesh_qm4tn")
+
+[node name="InteractionStateMachine" type="Node" parent="."]
+script = ExtResource("2_fsm")
+
+[node name="Idle" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("3_idle")
+
+[node name="Hover" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("4_hover")
+
+[node name="Active_Instant" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("5_instant")
+
+[node name="Active_Discrete" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("6_discrete")
+
+[node name="Active_Accumulate" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("7_accumulate")
+
+[node name="Active_Timing" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("8_timing")
+
+[node name="Locked" type="Node" parent="InteractionStateMachine"]
+script = ExtResource("9_locked")
